@@ -1,0 +1,25 @@
+# Sensitive environment & config files
+.env
+.env.*
+*.pem
+*.key
+
+# Personal / private vocabulary files
+*.xlsx
+*.xls
+*.csv
+*.txt
+*.pdf
+
+# OS & Editor metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+
+# Temp & dependencies
+node_modules/
+tmp/
+scratch/
+*.log
