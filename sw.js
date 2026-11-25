@@ -1,5 +1,5 @@
 /* WebHSK6 Service Worker — Relative paths for GitHub Pages compatibility */
-const CACHE_VERSION = 'hsk6-vocab-v1.0.0';
+const CACHE_VERSION = 'hsk6-vocab-v1.1.0';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -33,7 +33,6 @@ self.addEventListener('fetch', event => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  // Only handle same-origin requests so CDN libraries/fonts use browser HTTP cache cleanly
   if (url.origin !== self.location.origin) return;
 
   const isHTMLNavigation =
@@ -43,8 +42,6 @@ self.addEventListener('fetch', event => {
     url.pathname.endsWith('/');
 
   if (isHTMLNavigation) {
-    // Network-First for HTML: users always receive the newest update when online,
-    // and seamlessly fall back to cached app when offline.
     event.respondWith(
       fetch(req)
         .then(networkRes => {
@@ -59,7 +56,6 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Stale-While-Revalidate for static icons & manifest
   event.respondWith(
     caches.match(req).then(cached => {
       const fetchPromise = fetch(req)
